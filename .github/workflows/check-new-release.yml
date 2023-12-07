@@ -1,0 +1,59 @@
+name: Check for new release
+on:
+  schedule:
+    - cron: '20 5 */7 * *'
+  workflow_dispatch:
+
+jobs:
+  nexus:
+    permissions:
+      contents: write
+    name: Nexus
+    runs-on: ubuntu-latest
+    outputs:
+      needs_update: ${{ steps.check.outputs.needs_update }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && github.ref_name || 'master' }}
+
+      - name: Check latest git tag
+        id: check
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          LATEST_TAG=$(gh release list -R sonatype/nexus-public --exclude-drafts --exclude-pre-releases --limit 1 | awk -F' ' '{print $3}')
+          if [ "$LATEST_TAG" == "$(cat VERSION)" ]; then
+            echo "needs_update=false" >> $GITHUB_OUTPUT
+          else
+            echo "$LATEST_TAG" > VERSION
+            echo "needs_update=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Configure git
+        if: ${{ steps.check.outputs.needs_update == 'true' }}
+        run: |
+          git config --global user.name github-actions[bot]
+          git config --global user.email 41898282+github-actions[bot]@users.noreply.github.com
+      
+      - name: Update Nexus version
+        if: ${{ steps.check.outputs.needs_update == 'true' }}
+        run: |
+          NEW_VERSION=$(cat VERSION | sed 's/release-//')
+          sed -i "s/\(ENV NEXUS_VERSION\) \".*\"/\1 \"${NEW_VERSION}\"/" Dockerfile
+
+      - name: Commit and push
+        if: ${{ steps.check.outputs.needs_update == 'true' }}
+        run: |
+          git add .
+          git commit -m "Update Nexus to $(cat VERSION | sed 's/release-//')"
+          git push
+  
+  new_image:
+    permissions:
+      contents: read
+      packages: write
+    needs: nexus
+    if: ${{ needs.nexus.outputs.needs_update == 'true' }}
+    uses: ./.github/workflows/build-image.yml
+      
