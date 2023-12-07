@@ -1,6 +1,6 @@
-FROM alpine:3.16
+FROM alpine:3.18
 
-LABEL maintainer devops@travelaudience.com
+LABEL MAINTAINER julian.liebig@tudock.de
 
 # java
 ENV JAVA_HOME=/usr/lib/jvm/default-jvm/jre
