@@ -47,7 +47,9 @@ jobs:
         run: |
           git add .
           git commit -m "Update Nexus to $(cat VERSION | sed 's/release-//')"
+          git tag v$(cat VERSION | sed 's/release-//').$(cat REVISION)
           git push
+          git push --tags
   
   new_image:
     permissions:
