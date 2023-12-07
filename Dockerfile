@@ -40,7 +40,7 @@ RUN apk add --no-cache -t .build-deps wget gnupg openssl \
     && export GNUPGHOME="$(mktemp -d)" \
     && gpg --recv-keys $GPG_KEY \
     && gpg --batch --verify nexus.tar.gz.asc nexus.tar.gz \
-    && rm -r $GNUPGHOME nexus.tar.gz.asc \
+    && (rm -r $GNUPGHOME nexus.tar.gz.asc || true) \
   && tar -xf nexus.tar.gz \
   && mkdir -p $SONATYPE_DIR \
   && mv nexus-$NEXUS_VERSION $NEXUS_HOME \
