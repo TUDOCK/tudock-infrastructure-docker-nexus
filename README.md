@@ -2,20 +2,19 @@
 
 A container image for Sonatype Nexus Repository Manager OSS, based on Alpine Linux.
 
-[![Docker Repository on Quay](https://quay.io/repository/travelaudience/docker-nexus/status "Docker Repository on Quay")](https://quay.io/repository/travelaudience/docker-nexus)
-
 ## Current software
 
-* Alpine Linux 3.14
-* OpenJDK JRE 8u212
-* Nexus Repository Manager OSS 3.42.0 ([release notes](https://help.sonatype.com/repomanager3/product-information/release-notes/2022-release-notes/nexus-repository-3.42.0-release-notes))
+* Alpine Linux 3.18
+* OpenJDK JRE 8u392
+* Nexus Repository Manager OSS
+  * Current version: See [VERSION](./VERSION)
 
 ## Running
 
-Running it locally (for the latest tag, check [quay.io/repository/travelaudience/docker-nexus](https://quay.io/repository/travelaudience/docker-nexus?tab=tags):
+Running it locally:
 
 ```shell
-docker run -p 8081:8081 --name nexus quay.io/travelaudience/docker-nexus:3.42.0-01
+docker run -p 8081:8081 --name nexus ghcr.io/jeliebig/docker-nexus:latest
 ```
 
 ## Reasoning
