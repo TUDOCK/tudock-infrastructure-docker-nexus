@@ -8,12 +8,15 @@ ENV JAVA_HOME=/usr/lib/jvm/default-jvm/jre
 # nexus latest binary release link
 # https://help.sonatype.com/repomanager3/download/download-archives---repository-manager-3
 
+# nexus gpg key link
+# https://help.sonatype.com/repomanager3/product-information/download#Download-RelatedLinks
+
 # nexus
 ENV NEXUS_VERSION "3.42.0-01"
 ENV NEXUS_DOWNLOAD_URL "https://download.sonatype.com/nexus/3"
 ENV NEXUS_TARBALL_URL "${NEXUS_DOWNLOAD_URL}/nexus-${NEXUS_VERSION}-unix.tar.gz"
 ENV NEXUS_TARBALL_ASC_URL "${NEXUS_DOWNLOAD_URL}/nexus-${NEXUS_VERSION}-unix.tar.gz.asc"
-ENV GPG_KEY 0374CF2E8DD1BDFD
+ENV GPG_KEY "0374CF2E8DD1BDFD"
 
 ENV SONATYPE_DIR /opt/sonatype
 ENV NEXUS_HOME "${SONATYPE_DIR}/nexus"
@@ -21,6 +24,9 @@ ENV NEXUS_DATA /nexus-data
 ENV NEXUS_CONTEXT ''
 ENV SONATYPE_WORK ${SONATYPE_DIR}/sonatype-work
 ENV NEXUS_DATA_CHOWN "true"
+
+# java version link
+# https://help.sonatype.com/repomanager3/product-information/sonatype-nexus-repository-system-requirements#SonatypeNexusRepositorySystemRequirements-Java
 
 # Install prerequisites
 RUN apk add --no-cache --update bash ca-certificates runit su-exec util-linux openjdk8-jre
