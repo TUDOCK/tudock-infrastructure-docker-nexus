@@ -31,7 +31,7 @@ jobs:
       - name: Read version and revision info
         id: info
         run: |
-          echo "version=$(cat VERSION)" >> $GITHUB_OUTPUT
+          echo "version=$(cat VERSION | sed 's/release-//')" >> $GITHUB_OUTPUT
           echo "rev=$(cat REVISION)" >> $GITHUB_OUTPUT
 
       - name: Log in to the Container registry
