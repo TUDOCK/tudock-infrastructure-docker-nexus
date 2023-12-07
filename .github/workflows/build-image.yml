@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event_name == 'workflow_call' && 'master' || github.sha }}
+          ref: ${{ github.event_name != 'pull_request' && 'master' || github.sha }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -46,7 +46,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          context: ${{ github.event_name == 'workflow_call' && 'git' || 'workflow' }}
+          context: ${{ github.event_name != 'pull_request' && 'git' || 'workflow' }}
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           flavor: latest=${{ github.event_name != 'pull_request' && 'true' || 'false' }}
           tags: |
