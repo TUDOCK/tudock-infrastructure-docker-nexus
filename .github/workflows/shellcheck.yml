@@ -1,0 +1,30 @@
+name: Lint source code
+
+on:
+  push:
+    branches-ignore:
+      - "master"
+  pull_request:
+
+jobs:
+  shellcheck:
+    permissions:
+      contents: read
+      checks: write
+    name: ShellCheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Add problem matcher
+        run: echo "::add-matcher::.github/shellcheck-gcc.json"
+      
+      - name: Run shellcheck on all shell scripts
+        run: |
+          find ./ \
+            \( -path "**/.git/**" -prune \) \
+            -or \
+            -type f -executable \
+            -execdir sh -c 'head -n 1 $1 | grep "sh" > /dev/null' find-sh {} \; \
+            -print0 \
+            | xargs -0 shellcheck -f gcc
