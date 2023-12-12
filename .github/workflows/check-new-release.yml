@@ -22,7 +22,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          LATEST_TAG=$(gh release list -R sonatype/nexus-public --exclude-drafts --exclude-pre-releases --limit 1 | awk -F' ' '{print $3}')
+          LATEST_TAG=$(gh release view -R sonatype/nexus-public --json tagName --jq '.tagName')
           if [ "$LATEST_TAG" == "$(cat VERSION)" ]; then
             echo "needs_update=false" >> $GITHUB_OUTPUT
           else
