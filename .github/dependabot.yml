@@ -4,13 +4,13 @@ updates:
   - directory: /
     package-ecosystem: github-actions
     reviewers:
-      - 'jeliebig'
+      - "TUDOCK/devops"
     schedule:
       interval: daily
 
   - directory: "/"
     package-ecosystem: docker
     reviewers:
-      - 'jeliebig'
+      - "TUDOCK/devops"
     schedule:
       interval: weekly
