@@ -14,7 +14,7 @@ A container image for Sonatype Nexus Repository Manager OSS, based on Alpine Lin
 Running it locally:
 
 ```shell
-docker run -p 8081:8081 --name nexus ghcr.io/jeliebig/docker-nexus:latest
+docker run -p 8081:8081 --name nexus ghcr.io/tudock/docker-nexus:latest
 ```
 
 ## Reasoning

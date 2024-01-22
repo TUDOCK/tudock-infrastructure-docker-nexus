@@ -1,6 +1,6 @@
 FROM alpine:3.18
 
-LABEL MAINTAINER julian.liebig@tudock.de
+LABEL MAINTAINER devops@tudock.de
 
 # java
 ENV JAVA_HOME=/usr/lib/jvm/default-jvm/jre
