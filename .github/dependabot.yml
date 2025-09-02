@@ -1,12 +1,14 @@
 version: 2
 
 updates:
-  - directory: /
-    package-ecosystem: github-actions
-    reviewers:
-      - "TUDOCK/devops"
+  # Updates for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    open-pull-requests-limit: 5
+    target-branch: "master"
     schedule:
       interval: daily
+      timezone: "Europe/Berlin"
 
   - directory: "/"
     package-ecosystem: docker
